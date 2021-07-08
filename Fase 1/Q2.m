@@ -1,9 +1,9 @@
 % |      UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE      |
 % |     Disciplina: Processamento Digital de Imagens      |
-% |         LaboratÛrio dos capÌtulos 1, 2, 3 e 4         |
+% |         Laborat√≥rio dos cap√≠tulos 1, 2, 3 e 4         |
 % |            Docente: Heliana Bezerra Soares            |
 % ---------------------------------------------------------
-% Alunos: Eul·lia Costa Ribeiro e Gabriel VinÌcius Sousa da Silva
+% Alunos: Eul√°lia Costa Ribeiro e Gabriel Vin√≠cius Sousa da Silva
 
 %%
 %carregando os dados
@@ -13,30 +13,36 @@ I = rgb2gray(I);
 figure;imshow(I);title('Imagem');
 %%
 %B)
-%Filtro de media e mediana
-kelnelMedia = ones(5)/25;
-b1 = convolve(kelnelMedia, I);
-b2 = medfilt2(I,[5 5]);
-figure;
-subplot(1,2,1);imshow(b1);title('Filtro de media5x5');
-subplot(1,2,2);imshow(b2);title('Filtro de mediana5x5');
+%Filtro de media e mediana 
+kernelMedia = ones(3)/9;
+highPass = HighPassFilter(I,20);
+b =  filterFourier(I,highPass);
+b1 = convolve(kernelMedia, ifftShow(b));
+b2 = medfilt2(ifftShow(b),[3 3]);
 %%
-%limiarizaÁ„o
-%calculando o limiar globla
-levelB1 = graythresh(b1)
-levelB2 = graythresh(b2)
-%aplicando a limiarizaÁ„o
-Lb1 = imbinarize(I,levelB1);
-Lb2 = imbinarize(I,levelB2);
+%Plotando as respostas
 figure;
-subplot(1,2,1);imshow(Lb1);title('LimiarizaÁ„o do Filtro de medis');
-subplot(1,2,2);imshow(Lb2);title('LimiarizaÁ„o do Filtro de mediana');
+subplot(1,3,1);imshow(ifftShow(b));title('Filtro passa alta');
+subplot(1,3,2);imshow(ifftShow(b1));title('Passa alta + media');
+subplot(1,3,3);imshow(ifftShow(b2));title('Passa alta + mediana');
 %%
 %C)
-c = imnoise(I,'salt & pepper')
-figure;imshow(c);title('Imagem co ruido sal e pimenta');
+%limiariza√ß√£o
+%calculando o limiar globla
+levelB1 = graythresh(b1);
+levelB2 = graythresh(b2);
+%aplicando a limiariza√ß√£o
+Lb1 = imbinarize(b1,levelB1);
+Lb2 = imbinarize(b2,levelB2);
+figure;
+subplot(1,2,1);imshow(Lb1);title('Limiariza√ß√£o do Filtro de media');
+subplot(1,2,2);imshow(Lb2);title('Limiariza√ß√£o do Filtro de mediana');
 %%
 %D)
+d = imnoise(I,'salt & pepper')
+figure;imshow(d);title('Imagem com ru√≠do sal e pimenta');
+%%
+%E)
 %Criando as mascaras
 kernelsSize = [3 5 15];
 kernels = {};
@@ -46,34 +52,58 @@ for i = 1:length(kernelsSize)
 end  
 %%
 %Filtrando as imagem ruidosa
-D= {};%cÈlula de imagens filtradas
+E= {};%c√©lula de imagens filtradas
 for i = 1:length(kernels)
-    D{i} = convolve(kernels{i}, c);
+    E{i} = convolve(kernels{i}, d);
     disp(i);
 end  
 %%
 %plotando os resultados
 figure;
 for i = 1:length(kernels)
-    subplot(1,3,i);imshow(D{i});title(sprintf('Filtro de media %x%',kernelsSize(i)));
+    subplot(1,3,i);imshow(E{i});title(sprintf('Filtro de media %d',kernelsSize(i)));
 end
 %%
-%E)
-%m·scara laplaciana que considera as diagonais
+%F)
+%m√°scara laplaciana que considera as diagonais
 mask = [1 1 1; 1 -8 1; 1 1 1];
-E ={}; %cÈlula de imagens filtradas
+F ={}; %c√©lula de imagens filtradas
 %Aplicando laplace nas imagens da letra D
-for i = 1:length(D)
-    E{i} = convolve(mask, D{i});
+for i = 1:length(E)
+    F{i} = convolve(mask, E{i});
     disp(i);
 end 
 %%
 %plotando os resultados
+laplaceImage = convolve(mask,I);
 figure;
-for i = 1:length(E)
-    subplot(1,3,i);imshow(E{i});title(sprintf('Filtro de Laplace no filtro %x%',kernelsSize(i)));
+subplot(2,2,1);imshow(laplaceImage);title('Laplaciano na imagem original');
+for i = 1:length(F)
+    subplot(2,2,i+1);imshow(F{i});title(sprintf('Laplaciano no filtro de media %d',kernelsSize(i)));
 end
 %%
-%F)
+%G)
+[fImage fEspctro] = homomorphicFilter(I, 10);
+%% plotando resultados
+figure;
+subplot(1,2,1);imshow(I);title('Imagem Original');
+subplot(1,2,2);imshow(ifftShow(fImage));title('Filtragem Hom√≥rfica');
+%%
+%H)
+w1 = [1 2 1; 2 4 2;1 2 1]/16;
+w2 = [-1 -1 -1;-1 4 -1;-1 -1 -1]/16;
 
+h1 = convolve(w1,d);
+h2 = convolve(w2,d);
+h3 = convolve(w1,fImage);
+h4 = convolve(w2,fImage);
+%TODO pq h2 est√° saindo totalmente preto
+
+%%
+%Plotando os resultados
+figure;
+subplot(2,2,1);imshow(h1);title('Imagem d com w1');
+subplot(2,2,2);imshow(h2);title('Imagem d com w2');
+subplot(2,2,3);imshow(ifftShow(h3));title('Imagem g com w1');
+subplot(2,2,4);imshow(h4);title('Imagem g com w2');
 %%

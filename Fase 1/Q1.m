@@ -1,15 +1,15 @@
 % |      UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE      |
 % |     Disciplina: Processamento Digital de Imagens      |
-% |         Laborat�rio dos cap�tulos 1, 2, 3 e 4         |
+% |         Laboratï¿½rio dos capï¿½tulos 1, 2, 3 e 4         |
 % |            Docente: Heliana Bezerra Soares            |
 % ---------------------------------------------------------
-% Alunos: Eul�lia Costa Ribeiro e Gabriel Vin�cius Sousa da Silva
+% Alunos: Eulï¿½lia Costa Ribeiro e Gabriel Vinï¿½cius Sousa da Silva
 
 %%
 %carregando os dados
 I = imread('IDRiD_14.jpg')
 %%
-% A)e B) ser� que  � so isso mesmo?
+% A)e B) 
 IG = rgb2gray(I);
 figure;
 subplot(1,2,1);imshow(IG);title('Imagem Original');
@@ -53,15 +53,15 @@ e1 = imnoise(IG,'gaussian')
 e2 = imnoise(IG,'poisson')
 %%
 figure;
-subplot(1,2,1);imshow(e1);title('ru�do gaussiano');
-subplot(1,2,2);imshow(e2);title('ru�do de Poisson');
+subplot(1,2,1);imshow(e1);title('ruï¿½do gaussiano');
+subplot(1,2,2);imshow(e2);title('ruï¿½do de Poisson');
 %%
 %F)
 kernelsSize = [5 10 20 50];
 kernels = {};
-f1 = {}; %c�lula de filtros aplicados em e1
-f2 = {}; %c�lula de filtros aplicados em e2
-%criando as m�scaras
+f1 = {}; %cï¿½lula de filtros aplicados em e1
+f2 = {}; %cï¿½lula de filtros aplicados em e2
+%criando as mï¿½scaras
 %%
 for i = 1:length(kernelsSize)
     kernels{i} = ones(kernelsSize(i))/kernelsSize(i)^2;
@@ -73,7 +73,7 @@ for i = 1:length(kernels)
     f1{i} = uint8(imfilter(double(e1),double(kernels{i})));
     f2{i} = uint8(imfilter(double(e2),double(kernels{i})));
   
-    disp(sprintf('filtrando imagem com m�scara %d',kernelsSize(i)));
+    disp(sprintf('filtrando imagem com mï¿½scara %d',kernelsSize(i)));
 end  
 %%
 %plotando os resultados
@@ -127,17 +127,17 @@ subplot(1,3,3);histogram(e2);title('Histograma do ruido de Poisson');
 %%
 figure;
 for i=1:4
-subplot(2,2,i);histogram(f1{i});title(sprintf('Gaussiano filtrado com m�dia %d',kernelsSize(i)));
+subplot(2,2,i);histogram(f1{i});title(sprintf('Gaussiano filtrado com mï¿½dia %d',kernelsSize(i)));
 end
 %%
 figure;
 for i=1:4
-subplot(2,2,i);histogram(f2{i});title(sprintf('Poisson filtrado com m�dia %d',kernelsSize(i)));
+subplot(2,2,i);histogram(f2{i});title(sprintf('Poisson filtrado com mï¿½dia %d',kernelsSize(i)));
 end
 %%
 figure;
-subplot(1,2,1);histogram(g1);title('Histograma de (I) - (e1) � (f1)');
-subplot(1,2,2);histogram(g2);title('Histograma (I) - (e2) � (f3)');
+subplot(1,2,1);histogram(g1);title('Histograma de (I) - (e1) ï¿½ (f1)');
+subplot(1,2,2);histogram(g2);title('Histograma (I) - (e2) ï¿½ (f3)');
 %%
 %L)
 figure;
