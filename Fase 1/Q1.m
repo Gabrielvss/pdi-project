@@ -1,9 +1,9 @@
 % |      UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE      |
 % |     Disciplina: Processamento Digital de Imagens      |
-% |         Laboratï¿½rio dos capï¿½tulos 1, 2, 3 e 4         |
+% |         Laboratório dos capítulos 1, 2, 3 e 4         |
 % |            Docente: Heliana Bezerra Soares            |
 % ---------------------------------------------------------
-% Alunos: Eulï¿½lia Costa Ribeiro e Gabriel Vinï¿½cius Sousa da Silva
+% Alunos: Eulália Costa Ribeiro e Gabriel Vinícius Sousa da Silva
 
 %%
 %carregando os dados
@@ -59,9 +59,9 @@ subplot(1,2,2);imshow(e2);title('ruï¿½do de Poisson');
 %F)
 kernelsSize = [5 10 20 50];
 kernels = {};
-f1 = {}; %cï¿½lula de filtros aplicados em e1
-f2 = {}; %cï¿½lula de filtros aplicados em e2
-%criando as mï¿½scaras
+f1 = {}; %celula de filtros aplicados em e1
+f2 = {}; %celula de filtros aplicados em e2
+%criando as mascaras
 %%
 for i = 1:length(kernelsSize)
     kernels{i} = ones(kernelsSize(i))/kernelsSize(i)^2;
