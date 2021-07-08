@@ -53,8 +53,8 @@ e1 = imnoise(IG,'gaussian')
 e2 = imnoise(IG,'poisson')
 %%
 figure;
-subplot(1,2,1);imshow(e1);title('ruï¿½do gaussiano');
-subplot(1,2,2);imshow(e2);title('ruï¿½do de Poisson');
+subplot(1,2,1);imshow(e1);title('ruído gaussiano');
+subplot(1,2,2);imshow(e2);title('ruído de Poisson');
 %%
 %F)
 kernelsSize = [5 10 20 50];
@@ -73,7 +73,7 @@ for i = 1:length(kernels)
     f1{i} = uint8(imfilter(double(e1),double(kernels{i})));
     f2{i} = uint8(imfilter(double(e2),double(kernels{i})));
   
-    disp(sprintf('filtrando imagem com mï¿½scara %d',kernelsSize(i)));
+    disp(sprintf('filtrando imagem com mascara %d',kernelsSize(i)));
 end  
 %%
 %plotando os resultados
@@ -127,17 +127,17 @@ subplot(1,3,3);histogram(e2);title('Histograma do ruido de Poisson');
 %%
 figure;
 for i=1:4
-subplot(2,2,i);histogram(f1{i});title(sprintf('Gaussiano filtrado com mï¿½dia %d',kernelsSize(i)));
+subplot(2,2,i);histogram(f1{i});title(sprintf('Gaussiano filtrado com media %d',kernelsSize(i)));
 end
 %%
 figure;
 for i=1:4
-subplot(2,2,i);histogram(f2{i});title(sprintf('Poisson filtrado com mï¿½dia %d',kernelsSize(i)));
+subplot(2,2,i);histogram(f2{i});title(sprintf('Poisson filtrado com media %d',kernelsSize(i)));
 end
 %%
 figure;
-subplot(1,2,1);histogram(g1);title('Histograma de (I) - (e1) ï¿½ (f1)');
-subplot(1,2,2);histogram(g2);title('Histograma (I) - (e2) ï¿½ (f3)');
+subplot(1,2,1);histogram(g1);title('Histograma de (I) - (e1) - (f1)');
+subplot(1,2,2);histogram(g2);title('Histograma (I) - (e2) - (f3)');
 %%
 %L)
 figure;
