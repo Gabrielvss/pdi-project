@@ -12,7 +12,7 @@ I = imread('IDRiD_14.jpg')
 % A)e B) será que  é so isso mesmo?
 IG = rgb2gray(I);
 figure;
-subplot(1,2,1);imshow(I);title('Imagem Original');
+subplot(1,2,1);imshow(IG);title('Imagem Original');
 subplot(1,2,2);imshow(IG);title('Imagem em escala de cinza');
 %%
 %C)
@@ -139,7 +139,7 @@ figure;
 subplot(1,2,1);histogram(g1);title('Histograma de (I) - (e1) – (f1)');
 subplot(1,2,2);histogram(g2);title('Histograma (I) - (e2) – (f3)');
 %%
-%
+%L)
 figure;
 subplot(2,4,1);histogram(adapthisteq(IG));title('L = 256');
 subplot(2,4,2);histogram(adapthisteq(I128));title('L = 128');
@@ -148,5 +148,5 @@ subplot(2,4,4);histogram(adapthisteq(I32));title('L = 32');
 subplot(2,4,5);histogram(adapthisteq(I16));title('L = 16');
 subplot(2,4,6);histogram(adapthisteq(I8));title('L = 8');
 subplot(2,4,7);histogram(adapthisteq(I4));title('L = 4');
-subplot(2,4,8);histogram(adapthisteq(I2));title('L = 256');
+subplot(2,4,8);histogram(adapthisteq(double(I2)));title('L = 2');
 %%
